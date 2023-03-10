@@ -68,7 +68,8 @@ class _AddPageState extends State<AddPage> {
   Future postTodo() async {
     try {
       //http://10.80.74.246:8080/api/v3/user
-      var url = Uri.http('127.0.0.1:8000', '/api/post_todolist/');
+      // var url = Uri.http('127.0.0.1:8000', '/api/post_todolist/');
+      var url = Uri.http('91da-202-28-78-206.ap.ngrok.io', '/api/post_todolist/');
       //ประเภทของ Data ที่เราจะส่งไป เป็นแบบ json
       Map<String, String> header = {"Content-type": "application/json"};
       //Data ที่จะส่ง

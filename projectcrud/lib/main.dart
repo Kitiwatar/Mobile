@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:projectcrud/pages/listdata.dart';
+// import 'package:projectcrud/pages/listdata.dart';
+import 'package:projectcrud/pages/todolist.dart';
 
 void main(List<String> args) {
   runApp (MyApp());
@@ -15,8 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Data List",
-      home: Listdata(),
+      title: "Todo List",
+      home: Todolist(),
     );
   }
 }

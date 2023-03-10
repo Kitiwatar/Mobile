@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:projectcrud/main.dart';
 import 'package:projectcrud/pages/add.dart';
+import 'package:projectcrud/pages/todolist.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
@@ -15,7 +16,14 @@ class Listdata extends StatefulWidget {
 }
 
 class _ListdataState extends State<Listdata> {
+  List todolistitems = [];
   @override
+  
+  void initState() {
+    super.initState();
+    getTodolist();
+  }
+
   List dataListItem = [
     'Book title 1',
     'Book title 2',
@@ -53,9 +61,17 @@ class _ListdataState extends State<Listdata> {
     );
   }
 }
-Future<void> getData() async{
-  var url = Uri.http("10.80.74.246:8080","/api/v3/user/theUser");
-  var respone = await http.get(url);
-  var result = json.decode(respone.body);
-  print(result);
+// Future<void> getData() async{
+//   var url = Uri.http("10.80.74.246:8080","/api/v3/user/theUser");
+//   var respone = await http.get(url);
+//   var result = json.decode(respone.body);
+//   print(result);
+// }
+Future <void> getTodolist() async {
+    List alltodo = [];
+    //http://10.80.25.48:8000/api/all-todolist/
+    var url = Uri.http('127.0.0.1:8000', '/api/all-todolist');
+    var response = await http.get(url);
+    var result = json.decode(response.body);
+    print(result);
 }
