@@ -38,6 +38,16 @@ class _TodolistState extends State<Todolist> {
       ),
       appBar: AppBar(
         title: Text('All Todolist'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                getTodolist();
+              },
+              icon: Icon(
+                Icons.refresh,
+                color: Colors.white,
+              ))
+        ],
       ),
       body: (todolistCreate()),
     );
@@ -49,19 +59,15 @@ class _TodolistState extends State<Todolist> {
       itemBuilder: ((context, index) {
         return Card(
           child: ListTile(
-            // title: Text("${todolistitems[index]['title']}"),
-            title: Text("${todolistitems[index]['p_name']}"),
+            title: Text("${todolistitems[index]['title']}"),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => updatePage(
-                            // todolistitems[index]['id'],
-                            // todolistitems[index]['title'],
-                            // todolistitems[index]['detail'],
-                            todolistitems[index]['p_id'],
-                            todolistitems[index]['p_name'],
-                            todolistitems[index]['p_customer'],
+                            todolistitems[index]['id'],
+                            todolistitems[index]['title'],
+                            todolistitems[index]['detail'],
                           )));
             },
           ),
@@ -70,17 +76,29 @@ class _TodolistState extends State<Todolist> {
     );
   }
 
+  // Future<void> getTodolist() async {
+  //   // List alltodo = [];
+  //   //http://10.80.25.48:8000/api/all-todolist/
+  //   var url = Uri.parse('127.0.0.1:8000/api/all-todolist/');
+  //   var response = await http.get(url);
+  //   var result = json.decode(response.body);
+  //   print('Test--------');
+  //   print(result);
+  //   setState(() {
+  //     todolistitems = result;
+  //   });
+  // }
   Future<void> getTodolist() async {
-    //List alltodo = [];
-    //http://10.80.25.48:8000/api/all-todolist/
-    // var url = Uri.http('localhost:8000', '/api/all-todolist/');
-    var url = Uri.http('dekdee2.informatics.buu.ac.th:9080', '/team0/api/getAllProjects');
+    var url = Uri.http('127.0.0.1:8000', 'api/all-todolist/');
     var response = await http.get(url);
-    var result = json.decode(response.body);
-    print('Test--------');
-    print(result);
-    setState(() {
-      todolistitems = result;
-    });
+    var result = utf8.decode(response.bodyBytes);
+    if (response.statusCode == 200) {
+      setState(() {
+        todolistitems = jsonDecode(result);
+      });
+      print(todolistitems);
+    } else {
+      print('A network error occurred');
+    }
   }
 }

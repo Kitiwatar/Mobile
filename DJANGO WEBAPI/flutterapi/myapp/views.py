@@ -30,12 +30,14 @@ def update_todolist(request, TID):
     todo = Todolist.objects.get(id = TID)
     if request.method == 'PUT':
         data = {}
-        serializer = TodolistSerializer(todo, data=request.data)
+        serializer = TodolistSerializer(todo, data = request.data)
         if serializer.is_valid():
             serializer.save()
             data['status'] = 'updated'
             return Response(data = data, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+
 
 # ใช้ Method DELETE ในการลบข้อมูล ตาม id ที่ส่งมา
 @api_view(['DELETE'])

@@ -28,7 +28,20 @@ class _updatePageState extends State<updatePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("แก้ไข")),
+        appBar: AppBar(
+          title: Text("แก้ไข"),
+          actions: [
+            IconButton(
+                onPressed: (() {
+                  print("Delete ID:  $_v1");
+                  deleteTodo().then((value) {
+                    Navigator.pop(context);
+                  });
+                }),
+                icon: Icon(Icons.delete),
+                color: Colors.red),
+          ],
+        ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: ListView(
@@ -88,6 +101,24 @@ class _updatePageState extends State<updatePage> {
 
       //เป็นการ Response ค่าแบบ POST
       var response = await http.put(url, headers: header, body: jsondata);
+      print('------result-------');
+      print(response.body);
+    } catch (err) {
+      print("error");
+      print(err);
+    }
+  }
+
+  Future deleteTodo() async {
+    try {
+      //http://10.80.74.246:8080/api/v3/user
+      // var url = Uri.http('127.0.0.1:8000', '/api/post_todolist/');
+      var url = Uri.http('localhost:8000', '/api/delete_todolist/${_v1}');
+      //ประเภทของ Data ที่เราจะส่งไป เป็นแบบ json
+      Map<String, String> header = {"Content-type": "application/json"};
+      //Data ที่จะส่ง
+      //เป็นการ Response ค่าแบบ POST
+      var response = await http.delete(url, headers: header);
       print('------result-------');
       print(response.body);
     } catch (err) {
